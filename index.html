@@ -8,15 +8,22 @@
 </head>
 <body>
     <div class="container">
+        <div class="language-selector">
+            <button class="lang-btn active" onclick="setLanguage('en')">English</button>
+            <button class="lang-btn" onclick="setLanguage('ko')">한국어</button>
+            <button class="lang-btn" onclick="setLanguage('ja')">日本語</button>
+            <button class="lang-btn" onclick="setLanguage('zh')">中文</button>
+        </div>
+
         <div class="calculator">
             <div class="display">
                 <input type="text" id="display" readonly placeholder="0">
             </div>
             <div class="buttons">
-                <button class="btn clear" onclick="clearDisplay()">C</button>
-                <button class="btn clear" onclick="deleteLast()">DEL</button>
-                <button class="btn operator" onclick="appendOperator('/')">/</button>
-                <button class="btn operator" onclick="appendOperator('*')">*</button>
+                <button class="btn clear" onclick="clearDisplay()" data-label="clear">C</button>
+                <button class="btn clear" onclick="deleteLast()" data-label="delete">DEL</button>
+                <button class="btn operator" onclick="appendOperator('/')">÷</button>
+                <button class="btn operator" onclick="appendOperator('*')">×</button>
 
                 <button class="btn" onclick="appendNumber('7')">7</button>
                 <button class="btn" onclick="appendNumber('8')">8</button>
@@ -40,6 +47,7 @@
         </div>
     </div>
 
+    <script src="translations.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

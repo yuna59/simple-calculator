@@ -3,6 +3,7 @@ let currentInput = '0';
 let previousInput = '';
 let operator = null;
 let shouldResetDisplay = false;
+let currentLanguage = 'en';
 
 function updateDisplay() {
     display.value = currentInput;
@@ -52,9 +53,9 @@ function calculate() {
         case '*':
             result = prev * current;
             break;
-        case '/':
+        case '÷':
             if (current === 0) {
-                alert('Cannot divide by zero!');
+                showAlert('cannotDivideByZero');
                 clearDisplay();
                 return;
             }
@@ -91,6 +92,35 @@ function deleteLast() {
     updateDisplay();
 }
 
+function setLanguage(lang) {
+    currentLanguage = lang;
+    
+    // Update active button
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+    
+    // Update button labels
+    updateButtonLabels();
+}
+
+function updateButtonLabels() {
+    const clearBtn = document.querySelector('[data-label="clear"]');
+    const deleteBtn = document.querySelector('[data-label="delete"]');
+    
+    if (clearBtn) {
+        clearBtn.textContent = translations[currentLanguage].clear;
+    }
+    if (deleteBtn) {
+        deleteBtn.textContent = translations[currentLanguage].delete;
+    }
+}
+
+function showAlert(messageKey) {
+    alert(translations[currentLanguage][messageKey]);
+}
+
 // Keyboard support
 document.addEventListener('keydown', function(event) {
     if (event.key >= '0' && event.key <= '9') {
@@ -98,7 +128,7 @@ document.addEventListener('keydown', function(event) {
     } else if (event.key === '.') {
         appendNumber('.');
     } else if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/') {
-        appendOperator(event.key);
+        appendOperator(event.key === '/' ? '÷' : event.key === '*' ? '×' : event.key);
     } else if (event.key === 'Enter' || event.key === '=') {
         calculate();
     } else if (event.key === 'Backspace') {
