@@ -5,11 +5,48 @@ let operator = null;
 let shouldResetDisplay = false;
 let currentLanguage = 'en';
 
+// Sound effects using Web Audio API
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+function playSound(frequency, duration, type = 'sine') {
+    try {
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.value = frequency;
+        oscillator.type = type;
+        
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+        
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + duration);
+    } catch (e) {
+        console.log('Audio not available');
+    }
+}
+
+function playBeep() {
+    playSound(800, 0.1); // Standard beep
+}
+
+function playOperatorSound() {
+    playSound(600, 0.15); // Lower beep for operators
+}
+
+function playClearSound() {
+    playSound(400, 0.2); // Lower, longer beep for clear
+}
+
 function updateDisplay() {
     display.value = currentInput;
 }
 
 function appendNumber(num) {
+    playBeep();
     if (shouldResetDisplay) {
         currentInput = num;
         shouldResetDisplay = false;
@@ -26,6 +63,7 @@ function appendNumber(num) {
 }
 
 function appendOperator(op) {
+    playOperatorSound();
     if (operator !== null && !shouldResetDisplay) {
         calculate();
     }
@@ -35,6 +73,7 @@ function appendOperator(op) {
 }
 
 function calculate() {
+    playBeep();
     if (operator === null || previousInput === '') {
         return;
     }
@@ -55,6 +94,7 @@ function calculate() {
             break;
         case '÷':
             if (current === 0) {
+                playSound(300, 0.3); // Error sound
                 showAlert('cannotDivideByZero');
                 clearDisplay();
                 return;
@@ -76,6 +116,7 @@ function calculate() {
 }
 
 function clearDisplay() {
+    playClearSound();
     currentInput = '0';
     previousInput = '';
     operator = null;
@@ -84,6 +125,7 @@ function clearDisplay() {
 }
 
 function deleteLast() {
+    playBeep();
     if (currentInput.length > 1) {
         currentInput = currentInput.slice(0, -1);
     } else {
@@ -93,6 +135,7 @@ function deleteLast() {
 }
 
 function setLanguage(lang) {
+    playBeep();
     currentLanguage = lang;
     
     // Update active button
