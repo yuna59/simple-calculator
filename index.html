@@ -8,11 +8,17 @@
 </head>
 <body>
     <div class="container">
-        <div class="language-selector">
-            <button class="lang-btn active" onclick="setLanguage('en')">English</button>
-            <button class="lang-btn" onclick="setLanguage('ko')">한국어</button>
-            <button class="lang-btn" onclick="setLanguage('ja')">日本語</button>
-            <button class="lang-btn" onclick="setLanguage('zh')">中文</button>
+        <div class="top-controls">
+            <div class="language-selector">
+                <button class="lang-btn active" onclick="setLanguage('en')">English</button>
+                <button class="lang-btn" onclick="setLanguage('ko')">한국어</button>
+                <button class="lang-btn" onclick="setLanguage('ja')">日本語</button>
+                <button class="lang-btn" onclick="setLanguage('zh')">中文</button>
+            </div>
+            
+            <div class="theme-toggle">
+                <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle dark mode">🌙</button>
+            </div>
         </div>
 
         <div class="calculator">
