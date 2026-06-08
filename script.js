@@ -6,6 +6,26 @@ let shouldResetDisplay = false;
 let currentLanguage = 'en';
 let isDarkMode = false;
 
+// Screen Navigation
+function navigateTo(screen) {
+    playBeep();
+    
+    // Hide all screens
+    document.querySelectorAll('.screen').forEach(s => {
+        s.classList.remove('active');
+    });
+    
+    // Show target screen
+    if (screen === 'home') {
+        document.getElementById('homeScreen').classList.add('active');
+    } else if (screen === 'calculator') {
+        document.getElementById('calculatorScreen').classList.add('active');
+    } else if (screen === 'chess') {
+        document.getElementById('chessScreen').classList.add('active');
+        initChessBoard();
+    }
+}
+
 // Load theme preference from localStorage
 function loadThemePreference() {
     const saved = localStorage.getItem('darkMode');
@@ -88,6 +108,7 @@ function playClearSound() {
     playSound(400, 0.2); // Lower, longer beep for clear
 }
 
+// Calculator Functions
 function updateDisplay() {
     display.value = currentInput;
 }
@@ -139,7 +160,7 @@ function calculate() {
         case '*':
             result = prev * current;
             break;
-        case '÷':
+        case '/':
             if (current === 0) {
                 playSound(300, 0.3); // Error sound
                 showAlert('cannotDivideByZero');
@@ -211,23 +232,32 @@ function showAlert(messageKey) {
     alert(translations[currentLanguage][messageKey]);
 }
 
-// Keyboard support
+// Keyboard support for calculator
 document.addEventListener('keydown', function(event) {
-    if (event.key >= '0' && event.key <= '9') {
-        appendNumber(event.key);
-    } else if (event.key === '.') {
-        appendNumber('.');
-    } else if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/') {
-        appendOperator(event.key === '/' ? '÷' : event.key === '*' ? '×' : event.key);
-    } else if (event.key === 'Enter' || event.key === '=') {
-        calculate();
-    } else if (event.key === 'Backspace') {
-        deleteLast();
-    } else if (event.key === 'Escape') {
-        clearDisplay();
+    const activeScreen = document.querySelector('.screen.active');
+    
+    if (activeScreen && activeScreen.id === 'calculatorScreen') {
+        if (event.key >= '0' && event.key <= '9') {
+            appendNumber(event.key);
+        } else if (event.key === '.') {
+            appendNumber('.');
+        } else if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/') {
+            appendOperator(event.key === '/' ? '÷' : event.key === '*' ? '×' : event.key);
+        } else if (event.key === 'Enter' || event.key === '=') {
+            calculate();
+        } else if (event.key === 'Backspace') {
+            deleteLast();
+        } else if (event.key === 'Escape') {
+            clearDisplay();
+        }
     }
 });
 
 // Initialize display and theme
 updateDisplay();
 loadThemePreference();
+
+// Show home screen on load
+document.addEventListener('DOMContentLoaded', function() {
+    navigateTo('home');
+});
