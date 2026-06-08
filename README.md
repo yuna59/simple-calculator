@@ -2,6 +2,8 @@
 
 A web-based calculator with dark mode, multiple languages, and keyboard support.
 
+**[한국어 버전으로 보기](README_KO.md)**
+
 ## Features
 
 - **Basic Operations**: Addition, subtraction, multiplication, division, modulo
