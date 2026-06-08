@@ -4,6 +4,53 @@ let previousInput = '';
 let operator = null;
 let shouldResetDisplay = false;
 let currentLanguage = 'en';
+let isDarkMode = false;
+
+// Load theme preference from localStorage
+function loadThemePreference() {
+    const saved = localStorage.getItem('darkMode');
+    if (saved !== null) {
+        isDarkMode = JSON.parse(saved);
+        if (isDarkMode) {
+            enableDarkMode();
+        }
+    } else {
+        // Check system preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            isDarkMode = true;
+            enableDarkMode();
+        }
+    }
+}
+
+function toggleTheme() {
+    playBeep();
+    isDarkMode = !isDarkMode;
+    localStorage.setItem('darkMode', JSON.stringify(isDarkMode));
+    
+    if (isDarkMode) {
+        enableDarkMode();
+    } else {
+        disableDarkMode();
+    }
+}
+
+function enableDarkMode() {
+    document.body.classList.add('dark-mode');
+    updateThemeButton();
+}
+
+function disableDarkMode() {
+    document.body.classList.remove('dark-mode');
+    updateThemeButton();
+}
+
+function updateThemeButton() {
+    const themeBtn = document.getElementById('themeBtn');
+    if (themeBtn) {
+        themeBtn.textContent = isDarkMode ? '☀️' : '🌙';
+    }
+}
 
 // Sound effects using Web Audio API
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -181,5 +228,6 @@ document.addEventListener('keydown', function(event) {
     }
 });
 
-// Initialize display
+// Initialize display and theme
 updateDisplay();
+loadThemePreference();
