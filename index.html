@@ -3,57 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Calculator</title>
+    <title>Calculator & Chess</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <div class="top-controls">
-            <div class="language-selector">
-                <button class="lang-btn active" onclick="setLanguage('en')">English</button>
-                <button class="lang-btn" onclick="setLanguage('ko')">한국어</button>
-                <button class="lang-btn" onclick="setLanguage('ja')">日本語</button>
-                <button class="lang-btn" onclick="setLanguage('zh')">中文</button>
+        <!-- Home Screen -->
+        <div id="homeScreen" class="screen active">
+            <div class="top-controls">
+                <div class="language-selector">
+                    <button class="lang-btn active" onclick="setLanguage('en')">English</button>
+                    <button class="lang-btn" onclick="setLanguage('ko')">한국어</button>
+                    <button class="lang-btn" onclick="setLanguage('ja')">日本語</button>
+                    <button class="lang-btn" onclick="setLanguage('zh')">中文</button>
+                </div>
+                
+                <div class="theme-toggle">
+                    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle dark mode">🌙</button>
+                </div>
             </div>
-            
-            <div class="theme-toggle">
-                <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle dark mode">🌙</button>
+
+            <div class="home-content">
+                <h1 class="app-title" data-label="appTitle">Calculator & Chess</h1>
+                <div class="app-selector">
+                    <div class="app-card" onclick="navigateTo('calculator')">
+                        <div class="app-icon">🧮</div>
+                        <h2 class="app-name" data-label="calculator">Calculator</h2>
+                    </div>
+                    <div class="app-card" onclick="navigateTo('chess')">
+                        <div class="app-icon">♟️</div>
+                        <h2 class="app-name" data-label="chess">Chess</h2>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="calculator">
-            <div class="display">
-                <input type="text" id="display" readonly placeholder="0">
+        <!-- Calculator Screen -->
+        <div id="calculatorScreen" class="screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="navigateTo('home')">← Back</button>
+                <h1 class="screen-title" data-label="calculator">Calculator</h1>
+                <div></div>
             </div>
-            <div class="buttons">
-                <button class="btn clear" onclick="clearDisplay()" data-label="clear">C</button>
-                <button class="btn clear" onclick="deleteLast()" data-label="delete">DEL</button>
-                <button class="btn operator" onclick="appendOperator('/')">÷</button>
-                <button class="btn operator" onclick="appendOperator('*')">×</button>
 
-                <button class="btn" onclick="appendNumber('7')">7</button>
-                <button class="btn" onclick="appendNumber('8')">8</button>
-                <button class="btn" onclick="appendNumber('9')">9</button>
-                <button class="btn operator" onclick="appendOperator('-')">-</button>
+            <div class="calculator">
+                <div class="display">
+                    <input type="text" id="display" readonly placeholder="0">
+                </div>
+                <div class="buttons">
+                    <button class="btn clear" onclick="clearDisplay()" data-label="clear">C</button>
+                    <button class="btn clear" onclick="deleteLast()" data-label="delete">DEL</button>
+                    <button class="btn operator" onclick="appendOperator('/')">÷</button>
+                    <button class="btn operator" onclick="appendOperator('*')">×</button>
 
-                <button class="btn" onclick="appendNumber('4')">4</button>
-                <button class="btn" onclick="appendNumber('5')">5</button>
-                <button class="btn" onclick="appendNumber('6')">6</button>
-                <button class="btn operator" onclick="appendOperator('+')">+</button>
+                    <button class="btn" onclick="appendNumber('7')">7</button>
+                    <button class="btn" onclick="appendNumber('8')">8</button>
+                    <button class="btn" onclick="appendNumber('9')">9</button>
+                    <button class="btn operator" onclick="appendOperator('-')">-</button>
 
-                <button class="btn" onclick="appendNumber('1')">1</button>
-                <button class="btn" onclick="appendNumber('2')">2</button>
-                <button class="btn" onclick="appendNumber('3')">3</button>
-                <button class="btn operator" onclick="appendOperator('%')">%</button>
+                    <button class="btn" onclick="appendNumber('4')">4</button>
+                    <button class="btn" onclick="appendNumber('5')">5</button>
+                    <button class="btn" onclick="appendNumber('6')">6</button>
+                    <button class="btn operator" onclick="appendOperator('+')">+</button>
 
-                <button class="btn zero" onclick="appendNumber('0')">0</button>
-                <button class="btn" onclick="appendNumber('.')">.</button>
-                <button class="btn equals" onclick="calculate()">=</button>
+                    <button class="btn" onclick="appendNumber('1')">1</button>
+                    <button class="btn" onclick="appendNumber('2')">2</button>
+                    <button class="btn" onclick="appendNumber('3')">3</button>
+                    <button class="btn operator" onclick="appendOperator('%')">%</button>
+
+                    <button class="btn zero" onclick="appendNumber('0')">0</button>
+                    <button class="btn" onclick="appendNumber('.')">.</button>
+                    <button class="btn equals" onclick="calculate()">=</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chess Screen -->
+        <div id="chessScreen" class="screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="navigateTo('home')">← Back</button>
+                <h1 class="screen-title" data-label="chess">Chess</h1>
+                <div></div>
+            </div>
+
+            <div class="chess-container">
+                <div class="chess-info">
+                    <div class="player-info">
+                        <span class="player-label" data-label="blackPlayer">Black</span>
+                        <span class="turn-indicator" id="blackTurnIndicator"></span>
+                    </div>
+                </div>
+
+                <div class="board" id="chessBoard">
+                    <!-- Chess board will be generated by JavaScript -->
+                </div>
+
+                <div class="chess-info">
+                    <div class="player-info">
+                        <span class="player-label" data-label="whitePlayer">White</span>
+                        <span class="turn-indicator" id="whiteTurnIndicator"></span>
+                    </div>
+                </div>
+
+                <div class="chess-controls">
+                    <button class="chess-btn" onclick="resetChessGame()" data-label="newGame">New Game</button>
+                    <button class="chess-btn" onclick="undoChessMove()" data-label="undo">Undo</button>
+                </div>
+
+                <div class="move-history">
+                    <h3 data-label="moveHistory">Move History</h3>
+                    <div id="moveHistoryList" class="history-list"></div>
+                </div>
             </div>
         </div>
     </div>
 
     <script src="translations.js"></script>
     <script src="script.js"></script>
+    <script src="chess.js"></script>
 </body>
 </html>
