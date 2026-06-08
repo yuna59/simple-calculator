@@ -1,18 +1,32 @@
-간단한 웹 기반 계산기입니다.
+# Simple Calculator
 
-## 설명
+A web-based calculator with dark mode, multiple languages, and keyboard support.
 
-이 프로젝트는 기본적인 산술 연산을 수행하는 웹 계산기입니다.    
-더하기, 빼기, 곱하기, 나누기 등의 연산을 브라우저에서 직접 수행할 수 있습니다.
+## Features
 
-## 기술 스택
+- **Basic Operations**: Addition, subtraction, multiplication, division, modulo
+- **Dark Mode**: Toggle between light and dark themes
+- **Multi-language**: English, Korean, Japanese, Chinese
+- **Keyboard Support**: Number keys, operators, Enter to calculate, Backspace to delete, Escape to clear
+- **Sound Effects**: Audio feedback for interactions
+- **Responsive Design**: Works on desktop and mobile
 
-- JavaScript: 계산 로직 및 인터렉션
-- HTML: 페이지 구조
-- CSS: 사용자 인터페이스 스타일
+## How to Use
 
-## 사용 방법
+1. Open `index.html` in a web browser
+2. Click numbers and operators to calculate
+3. Press `=` or Enter to get the result
+4. Use `C` to clear or `DEL` to delete the last digit
 
-저장소를 클론한 후 index.html 파일을 웹 브라우저에서 열면 계산기를 사용할 수 있습니다.
+## Controls
 
-README를 이모티콘 없이 텍스트로만 작성해서 수정했습니다. 이제 저장소에서 확인하실 수 있습니다.
+- **Buttons**: Click to select numbers and operations
+- **Theme Toggle**: Click the 🌙/☀️ button to switch dark/light mode
+- **Language**: Select your preferred language from the top buttons
+- **Keyboard**: Use number keys, `+`, `-`, `*`, `/`, Enter, Backspace, Escape
+
+## Technology
+
+- HTML5
+- CSS3 (with dark mode support)
+- JavaScript (with Web Audio API for sound effects)
